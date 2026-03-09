@@ -1,3 +1,58 @@
 ## Notebooks
 
-- Notebook 0: PyTorch Fundamentals https://colab.research.google.com/drive/1woC4Qp75BWhMcbdEwggcM41b8FJvx6th?usp=sharing
+| Notebook | Topic | Colab |
+|----------|-------|-------|
+| Notebook 0 | PyTorch Fundamentals | [Open in Colab](https://colab.research.google.com/drive/1woC4Qp75BWhMcbdEwggcM41b8FJvx6th?usp=sharing) |
+
+---
+
+## Running locally in VS Code / Cursor
+
+### 1. Install VS Code / Cursor extensions
+
+Install these two extensions:
+
+- **Python** (`ms-python.python`) — Python language support
+- **Jupyter** (`ms-toolsai.jupyter`) — notebook support, including kernel selection and cell execution
+
+In VS Code/Cursor: open the Extensions panel (`Cmd+Shift+X`), search for each name, and click **Install**.
+
+### 2. Install dependencies
+
+This project uses [`uv`](https://docs.astral.sh/uv/) as the package manager.
+If you don't have it yet:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then, from the repo root, create a virtual environment and install all dependencies (including `ipykernel`, which lets VS Code/Cursor talk to the Python kernel):
+
+```bash
+uv sync
+uv add ipykernel
+```
+
+This reads `pyproject.toml` and installs `torch`, `torchvision`, `matplotlib`, and `ipykernel` into `.venv/`.
+
+### 3. Select the kernel in VS Code / Cursor
+
+1. Open any `.ipynb` file.
+2. Click **Select Kernel** in the top-right corner of the notebook.
+3. Choose **Python Environments…** → select the `.venv` interpreter inside this repo (it will show the path ending in `.venv/bin/python`).
+
+That's it. You can now run all cells with `Shift+Enter` or **Run All**.
+
+### 4. Verify the setup
+
+Run the first cell of `notebook_0.ipynb`. It should import `torch` without errors and print the installed version.
+
+---
+
+### Quick-reference: common issues
+
+| Symptom | Fix |
+|---------|-----|
+| `ModuleNotFoundError: No module named 'torch'` | Wrong kernel selected — repeat step 3 |
+| Kernel not listed | Run `uv add --dev ipykernel` and reload VS Code/Cursor |
+| `uv` not found | Install uv (step 2) and restart your terminal |
